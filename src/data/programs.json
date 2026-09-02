@@ -1,0 +1,26 @@
+[
+  {
+    "id": 1,
+    "level": "Beginner",
+    "title": "Web Development Fundamentals",
+    "description": "Build a strong foundation in HTML, CSS, JavaScript, and essential web development concepts.",
+    "duration": "8 Weeks",
+    "cta": "Learn More"
+  },
+  {
+    "id": 2,
+    "level": "Intermediate",
+    "title": "Frontend Development",
+    "description": "Strengthen your frontend development skills with JavaScript, responsive design, React, and modern development practices.",
+    "duration": "10 Weeks",
+    "cta": "Learn More"
+  },
+  {
+    "id": 3,
+    "level": "Advanced",
+    "title": "Advanced React & Modern Web Development",
+    "description": "Take your frontend skills further with advanced React concepts and modern web development practices.",
+    "duration": "12 Weeks",
+    "cta": "Learn More"
+  }
+]

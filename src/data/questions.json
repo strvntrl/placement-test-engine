@@ -1,0 +1,197 @@
+[
+  {
+    "id": 1,
+    "question": "What does HTML stand for?",
+    "options": [
+      "Hyper Text Markup Language",
+      "High Text Machine Language",
+      "Hyperlink Text Management Language",
+      "Home Tool Markup Language"
+    ],
+    "answer": 0,
+    "category": "HTML",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 2,
+    "question": "Which HTML element is used to create a hyperlink?",
+    "options": [
+      "<link>",
+      "<a>",
+      "<href>",
+      "<url>"
+    ],
+    "answer": 1,
+    "category": "HTML",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 3,
+    "question": "Which CSS property is used to change the text color?",
+    "options": [
+      "font-color",
+      "text-color",
+      "color",
+      "foreground"
+    ],
+    "answer": 2,
+    "category": "CSS",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 4,
+    "question": "Which CSS layout system is commonly used to create one-dimensional layouts?",
+    "options": [
+      "Float",
+      "Flexbox",
+      "Position",
+      "Table"
+    ],
+    "answer": 1,
+    "category": "CSS",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 5,
+    "question": "What is the purpose of the CSS media query?",
+    "options": [
+      "To create animations",
+      "To connect to an API",
+      "To apply styles based on device or viewport conditions",
+      "To validate HTML"
+    ],
+    "answer": 2,
+    "category": "Responsive Design",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 6,
+    "question": "Which JavaScript keyword declares a block-scoped variable that can be reassigned?",
+    "options": [
+      "var",
+      "const",
+      "let",
+      "static"
+    ],
+    "answer": 2,
+    "category": "JavaScript",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 7,
+    "question": "What does the JavaScript array method map() return?",
+    "options": [
+      "The original array only",
+      "A new array based on the transformed elements",
+      "A single number",
+      "A boolean value"
+    ],
+    "answer": 1,
+    "category": "JavaScript",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 8,
+    "question": "What is the main purpose of React components?",
+    "options": [
+      "To organize the UI into reusable pieces",
+      "To replace JavaScript",
+      "To create database tables",
+      "To configure a web server"
+    ],
+    "answer": 0,
+    "category": "React",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 9,
+    "question": "Which React Hook is commonly used to manage local component state?",
+    "options": [
+      "useRoute",
+      "useState",
+      "useStyle",
+      "useComponent"
+    ],
+    "answer": 1,
+    "category": "React",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 10,
+    "question": "Why is the key prop used when rendering a list in React?",
+    "options": [
+      "To add CSS styles",
+      "To uniquely identify list elements for React's reconciliation",
+      "To encrypt data",
+      "To create API requests"
+    ],
+    "answer": 1,
+    "category": "React",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 11,
+    "question": "What is the purpose of semantic HTML?",
+    "options": [
+      "To make JavaScript run faster",
+      "To give meaning and structure to content",
+      "To reduce image size",
+      "To replace CSS"
+    ],
+    "answer": 1,
+    "category": "Web Fundamentals",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 12,
+    "question": "What does the JavaScript spread operator (...) commonly allow you to do?",
+    "options": [
+      "Create a CSS animation",
+      "Expand elements of an iterable or object",
+      "Declare a class",
+      "Stop a function"
+    ],
+    "answer": 1,
+    "category": "JavaScript",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 13,
+    "question": "What is the main purpose of Git?",
+    "options": [
+      "Styling web pages",
+      "Managing and tracking changes in source code",
+      "Hosting databases",
+      "Creating UI components"
+    ],
+    "answer": 1,
+    "category": "Git",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 14,
+    "question": "Which React Hook is commonly used to perform side effects such as fetching data?",
+    "options": [
+      "useEffect",
+      "useData",
+      "useFetchOnly",
+      "useAsyncComponent"
+    ],
+    "answer": 0,
+    "category": "React",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 15,
+    "question": "Which approach is generally recommended for creating responsive layouts?",
+    "options": [
+      "Using fixed widths for every device",
+      "Using responsive units, flexible layouts, and media queries",
+      "Using JavaScript for every style",
+      "Disabling mobile layouts"
+    ],
+    "answer": 1,
+    "category": "Responsive Design",
+    "difficulty": "Advanced"
+  }
+]
