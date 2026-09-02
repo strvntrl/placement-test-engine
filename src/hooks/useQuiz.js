@@ -1,206 +1,186 @@
-import { useEffect, useMemo, useState } from "react";
-import questions from "../data/questions.json";
+import { useCallback, useEffect, useMemo, useState } from 'react'
+
+import questions from '../data/questions.json'
+import programs from '../data/programs.json'
+
 import {
   getQuizProgress,
   saveQuizProgress,
-  removeQuizProgress,
   saveQuizResult,
-} from "../utils/storage";
-import { calculateScore, getLevel } from "../utils/quizUtils";
+} from '../utils/storage'
 
-const INITIAL_QUESTION = 0;
+import {
+  calculateScore,
+  getAnsweredCount,
+  getLevel,
+  getProgressPercentage,
+  getRecommendation,
+} from '../utils/quizUtils'
 
-export function useQuiz() {
-  const [currentQuestion, setCurrentQuestion] =
-    useState(INITIAL_QUESTION);
+const initialState = {
+  currentQuestion: 0,
+  answers: {},
+  isSubmitted: false,
+  score: null,
+  level: null,
+}
 
-  const [answers, setAnswers] = useState({});
+const useQuiz = () => {
+  const [quizState, setQuizState] = useState(() => {
+    const savedProgress = getQuizProgress()
 
-  const [isSubmitted, setIsSubmitted] = useState(false);
-
-  const [score, setScore] = useState(null);
-
-  const [level, setLevel] = useState(null);
-
-  const [isLoading, setIsLoading] = useState(true);
-
-  const [error, setError] = useState(null);
-
-  /* Restore quiz progress from localStorage */
-  useEffect(() => {
-    try {
-      if (!questions || questions.length === 0) {
-        setError("Something went wrong while loading the test.");
-        setIsLoading(false);
-        return;
-      }
-
-      const savedProgress = getQuizProgress();
-
-      if (savedProgress) {
-        setCurrentQuestion(
-          savedProgress.currentQuestion ?? INITIAL_QUESTION
-        );
-
-        setAnswers(savedProgress.answers ?? {});
-
-        setIsSubmitted(savedProgress.isSubmitted ?? false);
-
-        setScore(savedProgress.score ?? null);
-
-        setLevel(savedProgress.level ?? null);
-      }
-    } catch (err) {
-      console.error("Failed to restore quiz progress:", err);
-      setError("Something went wrong while loading the test.");
-    } finally {
-      setIsLoading(false);
+    if (!savedProgress) {
+      return initialState
     }
-  }, []);
 
-  /* Save quiz progress automatically */
+    return {
+      ...initialState,
+      ...savedProgress,
+      isSubmitted: false,
+      score: null,
+      level: null,
+    }
+  })
+
+  const {
+    currentQuestion,
+    answers,
+    isSubmitted,
+    score,
+    level,
+  } = quizState
+
+  const totalQuestions = questions.length
+
+  const currentQuestionData = questions[currentQuestion]
+
+  const answeredCount = useMemo(
+    () => getAnsweredCount(answers),
+    [answers]
+  )
+
+  const progressPercentage = useMemo(
+    () => getProgressPercentage(answers, totalQuestions),
+    [answers, totalQuestions]
+  )
+
   useEffect(() => {
-    if (isLoading || isSubmitted) {
-      return;
+    if (isSubmitted) {
+      return
     }
 
     saveQuizProgress({
       currentQuestion,
       answers,
-      isSubmitted,
-      score,
-      level,
-    });
-  }, [
-    currentQuestion,
-    answers,
-    isSubmitted,
-    score,
-    level,
-    isLoading,
-  ]);
+    })
+  }, [currentQuestion, answers, isSubmitted])
 
-  /* Current question object */
-  const question = questions[currentQuestion];
+  const selectAnswer = useCallback((questionId, answerIndex) => {
+    setQuizState((previous) => ({
+      ...previous,
+      answers: {
+        ...previous.answers,
+        [questionId]: answerIndex,
+      },
+    }))
+  }, [])
 
-  /* Number of questions answered */
-  const answeredCount = useMemo(() => {
-    return Object.keys(answers).length;
-  }, [answers]);
-
-  /* Progress percentage */
-  const progressPercentage = useMemo(() => {
-    if (questions.length === 0) {
-      return 0;
-    }
-
-    return Math.round(
-      (answeredCount / questions.length) * 100
-    );
-  }, [answeredCount]);
-
-  /* Select answer */
-  const selectAnswer = (answerIndex) => {
-    if (isSubmitted) {
-      return;
-    }
-
-    setAnswers((previousAnswers) => ({
-      ...previousAnswers,
-      [question.id]: answerIndex,
-    }));
-  };
-
-  /* Go to next question */
-  const nextQuestion = () => {
-    if (currentQuestion < questions.length - 1) {
-      setCurrentQuestion((previous) => previous + 1);
-    }
-  };
-
-  /* Go to previous question */
-  const previousQuestion = () => {
-    if (currentQuestion > 0) {
-      setCurrentQuestion((previous) => previous - 1);
-    }
-  };
-
-  /* Jump directly to a question */
-  const goToQuestion = (questionIndex) => {
+  const goToQuestion = useCallback((questionIndex) => {
     if (
-      questionIndex >= 0 &&
-      questionIndex < questions.length
+      questionIndex < 0 ||
+      questionIndex >= totalQuestions
     ) {
-      setCurrentQuestion(questionIndex);
-    }
-  };
-
-  /* Submit quiz */
-  const submitQuiz = () => {
-    if (isSubmitted) {
-      return;
+      return
     }
 
+    setQuizState((previous) => ({
+      ...previous,
+      currentQuestion: questionIndex,
+    }))
+  }, [totalQuestions])
+
+  const nextQuestion = useCallback(() => {
+    setQuizState((previous) => {
+      const nextIndex = previous.currentQuestion + 1
+
+      if (nextIndex >= totalQuestions) {
+        return previous
+      }
+
+      return {
+        ...previous,
+        currentQuestion: nextIndex,
+      }
+    })
+  }, [totalQuestions])
+
+  const previousQuestion = useCallback(() => {
+    setQuizState((previous) => {
+      const previousIndex = previous.currentQuestion - 1
+
+      if (previousIndex < 0) {
+        return previous
+      }
+
+      return {
+        ...previous,
+        currentQuestion: previousIndex,
+      }
+    })
+  }, [])
+
+  const submitQuiz = useCallback(() => {
     const calculatedScore = calculateScore(
       questions,
       answers
-    );
+    )
 
-    const calculatedLevel = getLevel(calculatedScore);
+    const levelResult = getLevel(calculatedScore)
 
-    setScore(calculatedScore);
-    setLevel(calculatedLevel);
-    setIsSubmitted(true);
+    const recommendation = getRecommendation(
+      programs,
+      levelResult.level
+    )
 
-    saveQuizResult({
+    const result = {
       score: calculatedScore,
-      level: calculatedLevel,
-    });
+      level: levelResult.level,
+      description: levelResult.description,
+      recommendation: levelResult.recommendation,
+      program: recommendation,
+    }
 
-    removeQuizProgress();
-  };
+    saveQuizResult(result)
 
-  /* Get selected answer for current question */
-  const selectedAnswer = question
-    ? answers[question.id]
-    : undefined;
+    setQuizState((previous) => ({
+      ...previous,
+      isSubmitted: true,
+      score: calculatedScore,
+      level: levelResult,
+    }))
 
-  /* Check whether a question has been answered */
-  const isQuestionAnswered = (questionId) => {
-    return Object.prototype.hasOwnProperty.call(
-      answers,
-      questionId
-    );
-  };
-
-  /* Number of unanswered questions */
-  const unansweredCount =
-    questions.length - answeredCount;
+    return result
+  }, [answers])
 
   return {
     questions,
-    question,
     currentQuestion,
+    currentQuestionData,
     answers,
-
-    selectedAnswer,
-
-    answeredCount,
-    unansweredCount,
-    progressPercentage,
-
     isSubmitted,
     score,
     level,
 
-    isLoading,
-    error,
+    totalQuestions,
+    answeredCount,
+    progressPercentage,
 
     selectAnswer,
+    goToQuestion,
     nextQuestion,
     previousQuestion,
-    goToQuestion,
     submitQuiz,
-    isQuestionAnswered,
-  };
+  }
 }
+
+export default useQuiz
