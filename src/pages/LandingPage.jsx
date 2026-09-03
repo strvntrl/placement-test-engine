@@ -39,6 +39,7 @@ function LandingPage() {
 
   const [form, setForm] = useState(initialForm)
   const [errors, setErrors] = useState({})
+  const [isLeaving, setIsLeaving] = useState(false)
 
   const handleChange = (event) => {
     const { name, value } = event.target
@@ -123,11 +124,19 @@ function LandingPage() {
     restartQuiz()
     saveUser(userData)
 
-    navigate('/test')
+    // play exit animation, then navigate once it finishes
+    setIsLeaving(true)
+    setTimeout(() => {
+      navigate('/test')
+    }, 350)
   }
 
   return (
-    <main className="relative min-h-screen overflow-y-auto sm:h-screen sm:overflow-hidden bg-slate-950">
+    <main
+      className={`relative min-h-screen overflow-y-auto sm:h-screen sm:overflow-hidden bg-slate-950 ${
+        isLeaving ? 'animate-page-out' : 'animate-page-in'
+      }`}
+    >
       <div className="pointer-events-none absolute -top-32 left-[-5%] h-96 w-96 rounded-full bg-teal-400/25 blur-3xl" />
       <div className="pointer-events-none absolute top-1/3 right-[-7%] h-112 w-md rounded-full bg-orange-400/30 blur-3xl" />
       <div className="pointer-events-none absolute bottom-[-15%] left-1/4 h-96 w-96 rounded-full bg-cyan-400/25 blur-3xl" />
@@ -142,7 +151,10 @@ function LandingPage() {
       {/* Page content */}
       <div className="relative flex min-h-screen flex-col px-3 py-3 sm:h-full sm:min-h-0 sm:overflow-hidden sm:px-6 sm:py-4 lg:px-8">
         {/* Hero */}
-        <section className="shrink-0 pt-2 sm:pt-3 lg:pt-4 mt-2 sm:mt-10 lg:mt-8">
+        <section
+          className="shrink-0 pt-2 sm:pt-3 lg:pt-4 mt-2 sm:mt-10 lg:mt-8 animate-fade-in-up"
+          style={{ animationDelay: '0ms' }}
+        >
           <div className="mx-auto max-w-3xl text-center">
             <div className="mb-2 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1 font-mono text-[11px] text-teal-300 backdrop-blur-sm sm:mb-3 sm:px-4 sm:py-1.5 sm:text-xs lg:text-sm">
               <span className="text-teal-500">&lt;</span>
@@ -190,7 +202,10 @@ function LandingPage() {
 
         {/* Registration */}
         <section className="flex flex-1 items-center justify-center py-3 sm:py-10 sm:min-h-0 mt-8 sm:mt-12 md:mt-8 lg:mt-5">
-          <div className="mx-auto w-full max-w-2xl">
+          <div
+            className="mx-auto w-full max-w-2xl animate-fade-in-up"
+            style={{ animationDelay: '150ms' }}
+          >
             <div className="rounded-2xl border border-white/10 bg-white/6 p-4 shadow-2xl shadow-black/50 backdrop-blur-xl sm:p-5 md:p-6">
               <div className="mb-3 sm:mb-4">
                 <h2 className="text-lg font-bold text-slate-50 sm:text-xl">

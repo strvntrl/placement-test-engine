@@ -1,6 +1,6 @@
 const WHATSAPP_NUMBER =
   import.meta.env.VITE_WHATSAPP_NUMBER ||
-  '6281234567890'
+  '6281259304458'
 
 export const generateWhatsAppMessage = (
   user,

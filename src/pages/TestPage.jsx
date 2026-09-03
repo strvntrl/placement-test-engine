@@ -38,6 +38,7 @@ function TestPage() {
 
   const [showConfirmation, setShowConfirmation] =
     useState(false)
+  const [isLeaving, setIsLeaving] = useState(false)
 
   useEffect(() => {
     if (isSubmitted || existingResult) {
@@ -51,10 +52,10 @@ function TestPage() {
 
   if (!questions || questions.length === 0) {
     return (
-      <main className="relative flex min-h-screen items-center justify-center overflow-hidden bg-slate-950 px-6">
+      <main className="relative flex min-h-screen items-center justify-center overflow-hidden bg-slate-950 px-6 animate-page-in">
         <div className="pointer-events-none absolute -top-32 left-[-5%] h-96 w-96 rounded-full bg-red-400/20 blur-3xl" />
 
-        <div className="relative w-full max-w-md rounded-2xl border border-white/10 bg-white/6 p-8 text-center shadow-2xl shadow-black/50 backdrop-blur-xl">
+        <div className="relative w-full max-w-md rounded-2xl border border-white/10 bg-white/6 p-8 text-center shadow-2xl shadow-black/50 backdrop-blur-xl animate-fade-in-up">
           <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-red-400/10 text-red-400">
             !
           </div>
@@ -89,7 +90,11 @@ function TestPage() {
     setShowConfirmation(false)
 
     if (result) {
-      navigate('/result')
+      // play exit animation, then navigate once it finishes
+      setIsLeaving(true)
+      setTimeout(() => {
+        navigate('/result')
+      }, 350)
     }
   }
 
@@ -98,7 +103,11 @@ function TestPage() {
 
   return (
     <>
-      <main className="relative min-h-screen overflow-hidden bg-slate-950">
+      <main
+        className={`relative min-h-screen overflow-hidden bg-slate-950 ${
+          isLeaving ? 'animate-page-out' : 'animate-page-in'
+        }`}
+      >
         <div className="pointer-events-none absolute -top-32 left-[-5%] h-96 w-96 rounded-full bg-teal-400/25 blur-3xl" />
         <div className="pointer-events-none absolute top-1/3 right-[-7%] h-112 w-md rounded-full bg-orange-400/30 blur-3xl" />
         <div className="pointer-events-none absolute bottom-[-15%] left-1/4 h-96 w-96 rounded-full bg-cyan-400/25 blur-3xl" />
@@ -120,13 +129,18 @@ function TestPage() {
           <div className="grid gap-6 lg:grid-cols-[1fr_280px]">
             {/* Question */}
             <section className="min-w-0">
-              <QuestionCard
-                question={currentQuestionData}
-                selectedAnswer={
-                  answers[currentQuestionData?.id]
-                }
-                onSelectAnswer={selectAnswer}
-              />
+              <div
+                key={currentQuestionData?.id ?? currentQuestion}
+                className="animate-fade-in-up"
+              >
+                <QuestionCard
+                  question={currentQuestionData}
+                  selectedAnswer={
+                    answers[currentQuestionData?.id]
+                  }
+                  onSelectAnswer={selectAnswer}
+                />
+              </div>
 
               {/* Navigation */}
               <div className="mt-6 flex items-center justify-between gap-3">
@@ -151,7 +165,7 @@ function TestPage() {
             </section>
 
             {/* Question Navigator */}
-            <aside className="h-fit rounded-2xl border border-white/10 bg-white/6 p-5 shadow-2xl shadow-black/50 backdrop-blur-xl lg:sticky lg:top-6">
+            <aside className="h-fit rounded-2xl border border-white/10 bg-white/6 p-5 shadow-2xl shadow-black/50 backdrop-blur-xl lg:sticky lg:top-6 animate-fade-in-up">
               <QuestionNavigator
                 questions={questions}
                 answers={answers}
