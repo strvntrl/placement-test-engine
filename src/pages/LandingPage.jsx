@@ -7,32 +7,28 @@ import Select from '../components/Select'
 
 import { saveUser } from '../utils/storage'
 
+const targetProgramOptions = [
+  {
+    value: 'web-development',
+    label: 'Web Development',
+  },
+  {
+    value: 'frontend-development',
+    label: 'Frontend Development',
+  },
+  {
+    value: 'fullstack-development',
+    label: 'Fullstack Development',
+  },
+]
+
 const initialForm = {
-  name: '',
+  fullName: '',
   email: '',
   whatsapp: '',
   domicile: '',
   targetProgram: '',
 }
-
-const programOptions = [
-  {
-    value: 'Frontend Development',
-    label: 'Frontend Development',
-  },
-  {
-    value: 'Full Stack Development',
-    label: 'Full Stack Development',
-  },
-  {
-    value: 'Web Development',
-    label: 'Web Development',
-  },
-  {
-    value: 'UI/UX Design',
-    label: 'UI/UX Design',
-  },
-]
 
 function LandingPage() {
   const navigate = useNavigate()
@@ -57,60 +53,59 @@ function LandingPage() {
   const validateForm = () => {
     const newErrors = {}
 
-    const trimmedName = form.name.trim()
-    const trimmedEmail = form.email.trim()
-    const trimmedWhatsApp = form.whatsapp.trim()
-    const trimmedDomicile = form.domicile.trim()
-
-    if (!trimmedName) {
-      newErrors.name = 'Full name is required.'
-    } else if (trimmedName.length < 3) {
-      newErrors.name = 'Full name must contain at least 3 characters.'
+    // Full name
+    if (!form.fullName.trim()) {
+      newErrors.fullName = 'Full name is required.'
+    } else if (form.fullName.trim().length < 3) {
+      newErrors.fullName = 'Full name must be at least 3 characters.'
     }
 
-    if (!trimmedEmail) {
+    // Email
+    if (!form.email.trim()) {
       newErrors.email = 'Email is required.'
     } else if (
-      !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmedEmail)
+      !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)
     ) {
       newErrors.email = 'Please enter a valid email address.'
     }
 
-    if (!trimmedWhatsApp) {
+    // WhatsApp
+    if (!form.whatsapp.trim()) {
       newErrors.whatsapp = 'WhatsApp number is required.'
-    } else if (!/^[0-9+\-\s()]+$/.test(trimmedWhatsApp)) {
-      newErrors.whatsapp =
-        'WhatsApp number can only contain valid phone characters.'
     } else if (
-      trimmedWhatsApp.replace(/\D/g, '').length < 10
+      !/^(?:\+62|62|0)8[1-9][0-9]{7,11}$/.test(
+        form.whatsapp.replace(/[\s-]/g, '')
+      )
     ) {
       newErrors.whatsapp =
-        'WhatsApp number must contain at least 10 digits.'
+        'Please enter a valid WhatsApp number.'
     }
 
-    if (!trimmedDomicile) {
+    // Domicile
+    if (!form.domicile.trim()) {
       newErrors.domicile = 'Domicile is required.'
     }
 
+    // Target program
     if (!form.targetProgram) {
-      newErrors.targetProgram = 'Please select your target program.'
+      newErrors.targetProgram = 'Please select a target program.'
     }
 
     return newErrors
   }
 
-  const normalizeWhatsApp = (value) => {
-    const digits = value.replace(/\D/g, '')
+  const normalizeWhatsApp = (phone) => {
+    const cleaned = phone.replace(/[\s-]/g, '')
 
-    if (digits.startsWith('0')) {
-      return `62${digits.slice(1)}`
+    if (cleaned.startsWith('+62')) {
+      return cleaned.replace('+62', '62')
     }
 
-    if (digits.startsWith('62')) {
-      return digits
+    if (cleaned.startsWith('0')) {
+      return `62${cleaned.slice(1)}`
     }
 
-    return digits
+    return cleaned
   }
 
   const handleSubmit = (event) => {
@@ -123,15 +118,15 @@ function LandingPage() {
       return
     }
 
-    const user = {
-      name: form.name.trim(),
+    const userData = {
+      ...form,
+      fullName: form.fullName.trim(),
       email: form.email.trim(),
       whatsapp: normalizeWhatsApp(form.whatsapp),
       domicile: form.domicile.trim(),
-      targetProgram: form.targetProgram,
     }
 
-    saveUser(user)
+    saveUser(userData)
 
     navigate('/test')
   }
@@ -139,119 +134,130 @@ function LandingPage() {
   return (
     <main className="min-h-screen bg-slate-50">
       {/* Hero */}
-      <section className="mx-auto max-w-7xl px-6 py-16 lg:px-8 lg:py-24">
-        <div className="grid items-center gap-12 lg:grid-cols-2">
-          <div>
-            <div className="mb-6 inline-flex rounded-full bg-indigo-50 px-4 py-2 text-sm font-medium text-indigo-600">
-              Frontend Placement Test
+      <section className="relative overflow-hidden">
+        <div className="absolute inset-0 z-0 bg-linear-to-br from-indigo-50 via-white to-violet-50" />
+
+        <div className="mx-auto max-w-6xl px-6 py-16 sm:py-20 lg:px-8 lg:py-24">
+          <div className="mx-auto max-w-3xl text-center">
+            <div className="mb-5 inline-flex items-center rounded-full border border-indigo-100 bg-white px-4 py-2 text-sm font-medium text-indigo-700 shadow-sm">
+              Placement Test Engine
             </div>
 
-            <h1 className="max-w-xl text-4xl font-bold tracking-tight text-slate-900 sm:text-5xl lg:text-6xl">
-              Discover Your Learning Level
+            <h1 className="text-4xl font-bold tracking-tight text-slate-950 sm:text-5xl lg:text-6xl">
+              Discover Your{' '}
+              <span className="text-indigo-600">
+                Learning Level
+              </span>
             </h1>
 
-            <p className="mt-6 max-w-xl text-lg leading-8 text-slate-600">
+            <p className="mx-auto mt-6 max-w-2xl text-base leading-7 text-slate-600 sm:text-lg">
               Take a quick placement test and find the right
               learning path for you.
             </p>
 
-            <div className="mt-8 flex flex-wrap gap-3">
-              <div className="rounded-xl bg-white px-4 py-3 shadow-sm ring-1 ring-slate-200">
-                <p className="text-sm font-semibold text-slate-900">
-                  15 Questions
-                </p>
-              </div>
+            <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
+              <span className="rounded-full bg-white px-4 py-2 text-sm font-medium text-slate-600 shadow-sm">
+                15 Questions
+              </span>
 
-              <div className="rounded-xl bg-white px-4 py-3 shadow-sm ring-1 ring-slate-200">
-                <p className="text-sm font-semibold text-slate-900">
-                  ±10 Minutes
-                </p>
-              </div>
+              <span className="rounded-full bg-white px-4 py-2 text-sm font-medium text-slate-600 shadow-sm">
+                ±10 Minutes
+              </span>
 
-              <div className="rounded-xl bg-white px-4 py-3 shadow-sm ring-1 ring-slate-200">
-                <p className="text-sm font-semibold text-slate-900">
-                  Instant Result
-                </p>
-              </div>
+              <span className="rounded-full bg-white px-4 py-2 text-sm font-medium text-slate-600 shadow-sm">
+                Instant Result
+              </span>
             </div>
           </div>
+        </div>
+      </section>
 
-          {/* Registration Card */}
-          <div className="rounded-3xl bg-white p-6 shadow-xl ring-1 ring-slate-200 sm:p-8">
-            <div className="mb-6">
-              <h2 className="text-2xl font-bold text-slate-900">
-                Start Your Test
+      {/* Registration */}
+      <section className="px-6 pb-16 lg:px-8">
+        <div className="mx-auto max-w-2xl">
+          <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
+            <div className="mb-8">
+              <h2 className="text-2xl font-bold text-slate-950">
+                Start Your Placement Test
               </h2>
 
-              <p className="mt-2 text-sm text-slate-500">
-                Fill in your information before starting the
-                placement test.
+              <p className="mt-2 text-sm leading-6 text-slate-500">
+                Tell us a little about yourself before starting
+                the test.
               </p>
             </div>
 
             <form
               onSubmit={handleSubmit}
-              className="space-y-5"
               noValidate
+              className="space-y-5"
             >
               <Input
+                id="fullName"
+                name="fullName"
                 label="Full Name"
-                name="name"
-                value={form.name}
-                onChange={handleChange}
                 placeholder="Enter your full name"
-                error={errors.name}
+                value={form.fullName}
+                onChange={handleChange}
+                error={errors.fullName}
                 required
               />
 
               <Input
-                label="Email"
+                id="email"
                 name="email"
                 type="email"
+                label="Email"
+                placeholder="you@example.com"
                 value={form.email}
                 onChange={handleChange}
-                placeholder="you@example.com"
                 error={errors.email}
                 required
               />
 
               <Input
-                label="WhatsApp Number"
+                id="whatsapp"
                 name="whatsapp"
+                type="tel"
+                label="WhatsApp Number"
+                placeholder="081234567890"
                 value={form.whatsapp}
                 onChange={handleChange}
-                placeholder="08123456789"
                 error={errors.whatsapp}
                 required
               />
 
               <Input
-                label="Domicile"
+                id="domicile"
                 name="domicile"
+                label="Domicile"
+                placeholder="e.g. Surabaya"
                 value={form.domicile}
                 onChange={handleChange}
-                placeholder="e.g. Surabaya"
                 error={errors.domicile}
                 required
               />
 
               <Select
-                label="Target Program"
+                id="targetProgram"
                 name="targetProgram"
+                label="Target Program"
+                placeholder="Select your target program"
                 value={form.targetProgram}
                 onChange={handleChange}
-                options={programOptions}
-                placeholder="Select your target program"
+                options={targetProgramOptions}
                 error={errors.targetProgram}
                 required
               />
 
-              <Button
-                type="submit"
-                className="w-full"
-              >
-                Start Placement Test
-              </Button>
+              <div className="pt-3">
+                <Button
+                  type="submit"
+                  className="w-full"
+                >
+                  Start Placement Test
+                </Button>
+              </div>
             </form>
           </div>
         </div>
