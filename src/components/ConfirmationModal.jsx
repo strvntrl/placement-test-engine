@@ -2,7 +2,8 @@ import Button from './Button'
 
 function ConfirmationModal({
   isOpen,
-  unansweredCount = 0,
+  answeredCount,
+  totalQuestions,
   onCancel,
   onConfirm,
 }) {
@@ -10,63 +11,54 @@ function ConfirmationModal({
     return null
   }
 
+  const unansweredCount =
+    totalQuestions - answeredCount
+
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/50 p-4"
-      role="presentation"
-      onMouseDown={onCancel}
+      className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/40 px-4 backdrop-blur-sm"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="confirmation-title"
     >
-      <div
-        role="dialog"
-        aria-modal="true"
-        aria-labelledby="confirmation-title"
-        className="w-full max-w-md rounded-2xl bg-white p-6 shadow-xl"
-        onMouseDown={(event) =>
-          event.stopPropagation()
-        }
-      >
-        <div className="mb-5">
-          <h2
-            id="confirmation-title"
-            className="text-xl font-bold text-slate-900"
-          >
-            Submit your test?
-          </h2>
-
-          <p className="mt-2 text-sm leading-6 text-slate-600">
-            Are you sure you want to submit your test?
-          </p>
-
-          {unansweredCount > 0 && (
-            <div className="mt-4 rounded-xl bg-amber-50 p-4 text-sm text-amber-800">
-              <strong>
-                {unansweredCount} question
-                {unansweredCount > 1 ? 's' : ''}{' '}
-                {unansweredCount > 1 ? 'are' : 'is'} still
-                unanswered.
-              </strong>
-
-              <p className="mt-1">
-                You can continue testing or submit
-                anyway.
-              </p>
-            </div>
-          )}
+      <div className="w-full max-w-md rounded-2xl bg-white p-6 shadow-xl sm:p-7">
+        <div className="flex h-12 w-12 items-center justify-center rounded-full bg-indigo-50 text-xl text-indigo-600">
+          ?
         </div>
 
-        <div className="flex flex-col-reverse gap-3 sm:flex-row sm:justify-end">
+        <h2
+          id="confirmation-title"
+          className="mt-5 text-xl font-bold text-slate-950"
+        >
+          Submit your test?
+        </h2>
+
+        {unansweredCount > 0 ? (
+          <p className="mt-3 text-sm leading-6 text-slate-600">
+            You have{' '}
+            <span className="font-semibold text-red-600">
+              {unansweredCount} unanswered question
+              {unansweredCount > 1 ? 's' : ''}
+            </span>
+            . Are you sure you want to submit your test?
+          </p>
+        ) : (
+          <p className="mt-3 text-sm leading-6 text-slate-600">
+            You have answered all {totalQuestions}{' '}
+            questions. Are you ready to see your result?
+          </p>
+        )}
+
+        <div className="mt-6 flex flex-col-reverse gap-3 sm:flex-row sm:justify-end">
           <Button
             variant="secondary"
             onClick={onCancel}
           >
-            Continue Testing
+            Continue Test
           </Button>
 
-          <Button
-            variant="primary"
-            onClick={onConfirm}
-          >
-            Submit Anyway
+          <Button onClick={onConfirm}>
+            Submit Test
           </Button>
         </div>
       </div>
