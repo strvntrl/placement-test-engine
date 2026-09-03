@@ -189,7 +189,7 @@ function LandingPage() {
         </section>
 
         {/* Registration */}
-        <section className="flex flex-1 items-center justify-center py-3 sm:py-10 sm:min-h-0 mt-8 sm:mt-12 md:mt-8 lg:mt-15">
+        <section className="flex flex-1 items-center justify-center py-3 sm:py-10 sm:min-h-0 mt-8 sm:mt-12 md:mt-8 lg:mt-5">
           <div className="mx-auto w-full max-w-2xl">
             <div className="rounded-2xl border border-white/10 bg-white/6 p-4 shadow-2xl shadow-black/50 backdrop-blur-xl sm:p-5 md:p-6">
               <div className="mb-3 sm:mb-4">
