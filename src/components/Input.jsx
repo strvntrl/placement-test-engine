@@ -36,7 +36,7 @@ function Input({
         required={required}
         aria-invalid={Boolean(error)}
         aria-describedby={error ? `${id}-error` : undefined}
-        className={`w-full rounded-xl border bg-white/5 px-4 py-3 text-sm text-slate-50 outline-none transition placeholder:text-slate-50 disabled:cursor-not-allowed disabled:bg-white/2 disabled:text-slate-500
+        className={`w-full rounded-xl border bg-white/5 px-4 py-3 text-sm text-slate-50 outline-none transition placeholder:text-slate-500 disabled:cursor-not-allowed disabled:bg-white/2 disabled:text-slate-500
           ${
             error
               ? 'border-red-400/50 focus:border-red-400 focus:ring-2 focus:ring-red-400/20'
