@@ -1,7 +1,7 @@
 # PathFinder-Dev — Placement Test Engine
 
 > 🔗 **GitHub Repository:** https://github.com/strvntrl/placement-test-engine
-> 🚀 **Live Deployment:** _[isi dengan URL Vercel/Netlify/GitHub Pages setelah deploy]_
+> 🚀 **Live Deployment:** https://pathfinder-dev.vercel.app/
 
 ---
 
@@ -164,30 +164,11 @@ Contoh deploy ke Vercel:
 
 ## 🤖 Penggunaan Artificial Intelligence (AI)
 
-Dalam proses pengembangan proyek ini, saya menggunakan bantuan AI (Claude, Anthropic) untuk membantu debugging, styling, dan penambahan fitur animasi. Seluruh prompt yang digunakan dicantumkan secara lengkap di bawah ini, sesuai urutan penggunaan:
+Dalam proses pengembangan proyek ini, saya menggunakan bantuan AI (Claude, Anthropic) untuk membantu debugging, styling, dan penambahan fitur animasi. Seluruh prompt yang digunakan dicantumkan secara lengkap di bawah ini:
 
-1. `ini kenapa pada saar ukuran mobile gabisa discroll ya` *(disertai lampiran kode `LandingPage.jsx`)*
-2. `berikan langsung full kode nya`
-3. `ini kenapa tiap isi form autofill lalu stay disitu warna teks nya malah jadi hitam, tapi kalo dilepas dia balik ke warna putih` *(disertai lampiran screenshot)*
-4. `ini punya saya tadi` *(disertai lampiran kode CSS autofill)*
-5. `tetap aja sama`
-6. `: buka DevTools → klik kanan pada input yang lagi terisi (state hitam itu) → Inspect → di panel Computed atau Styles / tidak nemu panel nya`
-7. `ini` *(disertai lampiran kode `Input.jsx`)*
-8. `desktop`
-9. `ini` *(disertai lampiran screenshot DevTools)* / `masalahnya ini di semua kolom`
-10. `untuk bagian score nya bisa diindikasikan beda warna untuk range nilai tertentu gitu, trus pesannya juga bedakan`
-11. `ini kode nya` *(disertai lampiran kode `ResultCard.jsx`)*
-12. `tambahkan animasi keluar masuk pakai css animation` *(disertai lampiran kode `LandingPage.jsx`)*
-13. `ini juga` *(disertai lampiran kode `TestPage.jsx`)*
-14. `ini juga` *(disertai lampiran kode `ResultPage.jsx`)*
-15. `kok pada saat masuk dan keluar itu ada animasi putih nya, hialngkan`
-16. `masih ada putih2nya pas transisi`
-17. *(disertai lampiran isi file `index.html`)*
-18. `oke sudah aman, sekarang animasi untuk ini` *(disertai lampiran kode `ResultPage.jsx`)*
-19. `nah sekarang buatkan dokumentasi format markdown` beserta ketentuan dokumentasi sebagai berikut:
-    > 1. Apabila peserta menggunakan bantuan Artificial Intelligence (AI) dalam proses pengerjaan, seluruh prompt yang digunakan wajib dicantumkan secara lengkap dalam dokumentasi proyek.
-    > 2. Peserta diwajibkan untuk menyusun dokumentasi proyek dalam format Markdown yang mencakup penjelasan mengenai proyek, cara menjalankan aplikasi, serta informasi relevan lainnya.
-    > 3. Peserta diwajibkan menyimpan source code secara publik di GitHub DAN melakukan live deployment aplikasi menggunakan layanan seperti Vercel, Netlify, atau GitHub Pages. Tautan repositori GitHub dan URL Live Deployment wajib dicantumkan dengan jelas di bagian paling atas pada file README.md.
+`Bantu saya membangun sebuah aplikasi web **Multi-Step Placement Test Engine** untuk mini project seleksi Front-End Developer. Aplikasi ini harus dibuat menggunakan **React + Vite dan Tailwind CSS**, tanpa Next.js, Remix, shadcn/ui, DaisyUI, Material UI, Bootstrap, atau library UI component lainnya. Semua tampilan dibuat sendiri menggunakan React dan Tailwind CSS.
+Konsep aplikasinya adalah placement test yang terdiri dari tiga tahap, yaitu pengisian biodata, pengerjaan quiz, dan halaman hasil. Buat landing page yang modern, clean, profesional, dan responsive dengan nuansa aplikasi edtech. Pada halaman awal, user dapat mengisi nama, email, nomor WhatsApp, domisili, dan target program. Form harus memiliki validasi yang baik dan mudah dipahami. Setelah data valid, simpan biodata ke localStorage dan arahkan user ke halaman `/test`. Pada halaman `/test`, tampilkan 15 soal pilihan ganda yang berasal dari mock data JSON lokal. Setiap soal memiliki pertanyaan, empat pilihan jawaban, jawaban benar, dan kategori. User harus bisa berpindah antar soal menggunakan tombol Previous/Next maupun nomor soal. Tampilkan progress bar yang menunjukkan progress pengerjaan secara real-time serta indikator soal yang sudah dan belum dijawab. Jawaban user dan posisi terakhir harus otomatis tersimpan di localStorage sehingga ketika browser di-refresh, progress quiz tidak hilang. Gunakan React Context atau custom hook seperti `useQuiz` untuk mengelola state quiz agar logic tidak bercampur dengan tampilan. Buat komponen React yang modular dan reusable seperti QuestionCard, OptionButton, ProgressBar, QuestionNavigator, Input, Button, ConfirmationModal, ResultCard, dan RecommendationCard. Struktur folder juga dibuat rapi dan mudah dikembangkan. Setelah semua soal selesai, user dapat melakukan submit. Sebelum submit, tampilkan confirmation modal. Jika masih ada soal yang belum dijawab, berikan informasi kepada user tetapi tetap izinkan untuk submit. Setelah submit, hitung skor berdasarkan jumlah jawaban benar dari 15 soal. Gunakan pembagian level 0–40% sebagai Beginner, 41–75% sebagai Intermediate, dan 76–100% sebagai Advanced. Buat halaman `/result` yang menampilkan nama user, skor, level, deskripsi hasil, serta rekomendasi program belajar yang sesuai dengan levelnya. Data rekomendasi disimpan dalam file JSON terpisah dan minimal memiliki program untuk Beginner, Intermediate, dan Advanced. Tambahkan tombol WhatsApp CTA yang membuat pesan otomatis berdasarkan nama, skor, level, dan program yang direkomendasikan. Nomor WhatsApp sebaiknya disimpan melalui environment variable agar mudah diganti. Perhatikan juga UX dan edge cases. Aplikasi harus responsive terutama untuk mobile, memiliki loading dan error state yang sesuai, validasi form yang intuitif, transition sederhana, focus state, serta menangani kondisi seperti user membuka `/test` tanpa mengisi biodata atau membuka `/result` tanpa menyelesaikan test. Hindari unnecessary re-render dan buat state management seefisien mungkin. Tampilan harus terasa seperti aplikasi yang benar-benar siap digunakan, bukan sekadar prototype tugas seleksi. Buat juga README.md yang menjelaskan project, fitur, teknologi yang digunakan, struktur project, cara menjalankan aplikasi, scoring logic, penggunaan localStorage, deployment, dan bagian **AI Assistance** untuk mencantumkan prompt yang digunakan selama proses development. Pada bagian paling atas README, sediakan tempat untuk `Live Demo URL` dan `GitHub Repository URL`, tetapi jangan membuat URL palsu. Terakhir, pastikan aplikasi benar-benar runnable dan siap di-push ke GitHub serta di-deploy ke Vercel atau Netlify. Pastikan `npm install`, `npm run dev`, dan `npm run build` berjalan tanpa error. Flow utama harus berjalan dengan baik dari **Landing → Biodata → Quiz → Submit → Result → WhatsApp CTA**. Fokus pada clean code, reusable components, responsive design, dan UX yang polished.`
+
 
 **Ringkasan hasil bantuan AI yang diterapkan pada proyek:**
 
