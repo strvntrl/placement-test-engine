@@ -1,36 +1,33 @@
 function ProgressBar({
-  value = 0,
-  label,
+  current = 0,
+  total = 0,
+  percentage = 0,
 }) {
-  const safeValue = Math.min(
-    100,
-    Math.max(0, value)
-  )
-
   return (
-    <div className="space-y-2">
-      {label && (
-        <div className="flex items-center justify-between text-sm">
-          <span className="font-medium text-slate-700">
-            {label}
-          </span>
+    <div className="space-y-3">
+      <div className="flex items-center justify-between gap-4">
+        <span className="text-sm font-medium text-slate-700">
+          {current} / {total} Questions Answered
+        </span>
 
-          <span className="text-slate-500">
-            {safeValue}%
-          </span>
-        </div>
-      )}
+        <span className="text-sm font-semibold text-indigo-600">
+          {percentage}%
+        </span>
+      </div>
 
       <div
-        className="h-2 w-full overflow-hidden rounded-full bg-slate-100"
+        className="h-2.5 w-full overflow-hidden rounded-full bg-slate-100"
         role="progressbar"
-        aria-valuenow={safeValue}
+        aria-valuenow={percentage}
         aria-valuemin="0"
         aria-valuemax="100"
+        aria-label="Quiz progress"
       >
         <div
-          className="h-full rounded-full bg-indigo-600 transition-all duration-500 ease-out"
-          style={{ width: `${safeValue}%` }}
+          className="h-full rounded-full bg-indigo-600 transition-all duration-300 ease-out"
+          style={{
+            width: `${percentage}%`,
+          }}
         />
       </div>
     </div>
