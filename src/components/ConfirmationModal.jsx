@@ -16,34 +16,30 @@ function ConfirmationModal({
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/40 px-4 backdrop-blur-sm"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/60 px-4 backdrop-blur-sm"
       role="dialog"
       aria-modal="true"
       aria-labelledby="confirmation-title"
     >
-      <div className="w-full max-w-md rounded-2xl bg-white p-6 shadow-xl sm:p-7">
-        <div className="flex h-12 w-12 items-center justify-center rounded-full bg-indigo-50 text-xl text-indigo-600">
-          ?
-        </div>
-
+      <div className="w-full max-w-md rounded-2xl border border-white/10 bg-slate-900/95 p-6 shadow-2xl shadow-black/50 backdrop-blur-xl sm:p-7">
         <h2
           id="confirmation-title"
-          className="mt-5 text-xl font-bold text-slate-950"
+          className="mt-5 text-xl font-bold text-slate-50"
         >
           Submit your test?
         </h2>
 
         {unansweredCount > 0 ? (
-          <p className="mt-3 text-sm leading-6 text-slate-600">
+          <p className="mt-3 text-sm leading-6 text-slate-400">
             You have{' '}
-            <span className="font-semibold text-red-600">
+            <span className="font-semibold text-red-400">
               {unansweredCount} unanswered question
               {unansweredCount > 1 ? 's' : ''}
             </span>
             . Are you sure you want to submit your test?
           </p>
         ) : (
-          <p className="mt-3 text-sm leading-6 text-slate-600">
+          <p className="mt-3 text-sm leading-6 text-slate-400">
             You have answered all {totalQuestions}{' '}
             questions. Are you ready to see your result?
           </p>

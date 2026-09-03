@@ -14,12 +14,12 @@ function Input({
     <div className="space-y-2">
       <label
         htmlFor={id}
-        className="block text-sm font-medium text-slate-700"
+        className="block text-sm font-medium text-slate-300"
       >
         {label}
 
         {required && (
-          <span className="ml-1 text-red-500" aria-hidden="true">
+          <span className="ml-1 text-red-400" aria-hidden="true">
             *
           </span>
         )}
@@ -36,24 +36,11 @@ function Input({
         required={required}
         aria-invalid={Boolean(error)}
         aria-describedby={error ? `${id}-error` : undefined}
-        className={`
-          w-full
-          rounded-xl
-          border
-          bg-white
-          px-4
-          py-3
-          text-sm
-          text-slate-900
-          outline-none
-          transition
-          placeholder:text-slate-400
-          disabled:cursor-not-allowed
-          disabled:bg-slate-100
+        className={`w-full rounded-xl border bg-white/5 px-4 py-3 text-sm text-slate-50 outline-none transition placeholder:text-slate-50 disabled:cursor-not-allowed disabled:bg-white/2 disabled:text-slate-500
           ${
             error
-              ? 'border-red-400 focus:border-red-500 focus:ring-2 focus:ring-red-100'
-              : 'border-slate-200 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100'
+              ? 'border-red-400/50 focus:border-red-400 focus:ring-2 focus:ring-red-400/20'
+              : 'border-white/10 focus:border-teal-400 focus:ring-2 focus:ring-teal-400/20'
           }
         `}
       />
@@ -61,7 +48,7 @@ function Input({
       {error && (
         <p
           id={`${id}-error`}
-          className="text-sm text-red-600"
+          className="text-sm text-red-400"
           role="alert"
         >
           {error}

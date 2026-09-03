@@ -9,8 +9,8 @@ function QuestionCard({
 }) {
   if (!question) {
     return (
-      <div className="rounded-2xl border border-red-200 bg-red-50 p-6">
-        <p className="text-sm font-medium text-red-700">
+      <div className="rounded-2xl border border-red-400/20 bg-red-400/10 p-6">
+        <p className="text-sm font-medium text-red-400">
           Unable to load this question.
         </p>
       </div>
@@ -20,26 +20,26 @@ function QuestionCard({
   return (
     <section
       aria-labelledby={`question-${question.id}`}
-      className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-7"
+      className="rounded-2xl border border-white/10 bg-white/6 p-5 shadow-2xl shadow-black/50 backdrop-blur-xl sm:p-7"
     >
       <div className="mb-6">
-        <p className="mb-2 text-sm font-semibold text-indigo-600">
+        <p className="mb-2 text-sm font-semibold text-teal-300">
           Question {question.id}
         </p>
 
         <h2
           id={`question-${question.id}`}
-          className="text-lg font-semibold leading-8 text-slate-900 sm:text-xl"
+          className="text-lg font-semibold leading-8 text-slate-50 sm:text-xl"
         >
           {question.question}
         </h2>
 
         <div className="mt-3 flex flex-wrap gap-2">
-          <span className="rounded-full bg-slate-100 px-3 py-1 text-xs font-medium text-slate-600">
+          <span className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs font-medium text-slate-300">
             {question.category}
           </span>
 
-          <span className="rounded-full bg-indigo-50 px-3 py-1 text-xs font-medium text-indigo-700">
+          <span className="rounded-full border border-teal-400/20 bg-teal-400/10 px-3 py-1 text-xs font-medium text-teal-300">
             {question.difficulty}
           </span>
         </div>

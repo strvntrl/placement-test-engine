@@ -53,8 +53,12 @@ function ResultPage() {
   }
 
   return (
-    <main className="min-h-screen bg-slate-50">
-      <div className="mx-auto max-w-4xl px-4 py-8 sm:px-6 lg:px-8 lg:py-12">
+    <main className="relative min-h-screen overflow-hidden bg-slate-950">
+      <div className="pointer-events-none absolute -top-32 left-[-5%] h-96 w-96 rounded-full bg-teal-400/25 blur-3xl" />
+      <div className="pointer-events-none absolute top-1/3 right-[-7%] h-112 w-md rounded-full bg-orange-400/30 blur-3xl" />
+      <div className="pointer-events-none absolute bottom-[-15%] left-1/4 h-96 w-96 rounded-full bg-cyan-400/25 blur-3xl" />
+
+      <div className="relative mx-auto max-w-4xl px-4 py-8 sm:px-6 lg:px-8 lg:py-12">
         <ResultCard
           score={result.score}
           level={result.level}

@@ -39,32 +39,31 @@ function TestPage() {
   const [showConfirmation, setShowConfirmation] =
     useState(false)
 
-  // Prevent accessing the test after it has already been submitted
   useEffect(() => {
     if (isSubmitted || existingResult) {
       navigate('/result', { replace: true })
     }
   }, [isSubmitted, existingResult, navigate])
 
-  // User has not registered yet
   if (!user) {
     return <Navigate to="/" replace />
   }
 
-  // Empty question data
   if (!questions || questions.length === 0) {
     return (
-      <main className="flex min-h-screen items-center justify-center bg-slate-50 px-6">
-        <div className="w-full max-w-md rounded-2xl border border-red-100 bg-white p-8 text-center shadow-sm">
-          <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-red-50 text-red-600">
+      <main className="relative flex min-h-screen items-center justify-center overflow-hidden bg-slate-950 px-6">
+        <div className="pointer-events-none absolute -top-32 left-[-5%] h-96 w-96 rounded-full bg-red-400/20 blur-3xl" />
+
+        <div className="relative w-full max-w-md rounded-2xl border border-white/10 bg-white/6 p-8 text-center shadow-2xl shadow-black/50 backdrop-blur-xl">
+          <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-red-400/10 text-red-400">
             !
           </div>
 
-          <h1 className="mt-5 text-xl font-bold text-slate-950">
+          <h1 className="mt-5 text-xl font-bold text-slate-50">
             Unable to Load Test
           </h1>
 
-          <p className="mt-2 text-sm leading-6 text-slate-500">
+          <p className="mt-2 text-sm leading-6 text-slate-400">
             The question data is currently unavailable.
             Please try again.
           </p>
@@ -99,14 +98,18 @@ function TestPage() {
 
   return (
     <>
-      <main className="min-h-screen bg-slate-50">
-        <div className="mx-auto max-w-6xl px-4 py-6 sm:px-6 lg:px-8 lg:py-10">
+      <main className="relative min-h-screen overflow-hidden bg-slate-950">
+        <div className="pointer-events-none absolute -top-32 left-[-5%] h-96 w-96 rounded-full bg-teal-400/25 blur-3xl" />
+        <div className="pointer-events-none absolute top-1/3 right-[-7%] h-112 w-md rounded-full bg-orange-400/30 blur-3xl" />
+        <div className="pointer-events-none absolute bottom-[-15%] left-1/4 h-96 w-96 rounded-full bg-cyan-400/25 blur-3xl" />
+
+        <div className="relative mx-auto max-w-6xl px-4 py-6 sm:px-6 lg:px-8 lg:py-10">
           <QuizHeader
             currentQuestion={currentQuestion}
             totalQuestions={totalQuestions}
           />
 
-          <div className="mb-6 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
+          <div className="mb-6 rounded-2xl border border-white/10 bg-white/6 p-5 shadow-2xl shadow-black/50 backdrop-blur-xl sm:p-6">
             <ProgressBar
               current={answeredCount}
               total={totalQuestions}
@@ -148,7 +151,7 @@ function TestPage() {
             </section>
 
             {/* Question Navigator */}
-            <aside className="h-fit rounded-2xl border border-slate-200 bg-white p-5 shadow-sm lg:sticky lg:top-6">
+            <aside className="h-fit rounded-2xl border border-white/10 bg-white/6 p-5 shadow-2xl shadow-black/50 backdrop-blur-xl lg:sticky lg:top-6">
               <QuestionNavigator
                 questions={questions}
                 answers={answers}
