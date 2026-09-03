@@ -143,7 +143,7 @@ function LandingPage() {
 
       <pre
         aria-hidden="true"
-        className="pointer-events-none absolute inset-0 select-none overflow-hidden whitespace-pre font-mono text-[11px] leading-5 text-teal-300/10 sm:text-xs"
+        className="pointer-events-none absolute inset-0 select-none overflow-hidden whitespace-pre font-mono text-[11px] leading-5 text-teal-300/5 sm:text-xs"
       >
         {Array(6).fill(backgroundSnippet).join('\n\n')}
       </pre>
