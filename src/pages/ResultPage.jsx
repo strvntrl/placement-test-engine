@@ -8,6 +8,7 @@ import ResultCard from '../components/ResultCard'
 import {
   getQuizResult,
   getUser,
+  restartQuiz,
 } from '../utils/storage'
 
 import { generateWhatsAppUrl } from '../utils/whatsapp'
@@ -46,6 +47,11 @@ function ResultPage() {
     navigate('/')
   }
 
+  const handleRestartTest = () => {
+    restartQuiz()
+    navigate('/test')
+  }
+
   return (
     <main className="min-h-screen bg-slate-50">
       <div className="mx-auto max-w-4xl px-4 py-8 sm:px-6 lg:px-8 lg:py-12">
@@ -63,12 +69,16 @@ function ResultPage() {
           />
         </div>
 
-        <div className="mt-6 text-center">
+        <div className="mt-6 flex flex-col justify-center gap-3 sm:flex-row">
           <Button
             variant="secondary"
             onClick={handleBackToHome}
           >
             Back to Home
+          </Button>
+
+          <Button onClick={handleRestartTest}>
+            Retake Test
           </Button>
         </div>
       </div>

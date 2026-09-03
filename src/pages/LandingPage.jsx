@@ -5,7 +5,7 @@ import Button from '../components/Button'
 import Input from '../components/Input'
 import Select from '../components/Select'
 
-import { saveUser } from '../utils/storage'
+import { restartQuiz, saveUser } from '../utils/storage'
 
 const targetProgramOptions = [
   {
@@ -126,6 +126,7 @@ function LandingPage() {
       domicile: form.domicile.trim(),
     }
 
+    restartQuiz()
     saveUser(userData)
 
     navigate('/test')

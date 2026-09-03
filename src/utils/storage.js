@@ -9,9 +9,14 @@ export const saveUser = (user) => {
 }
 
 export const getUser = () => {
-  const user = localStorage.getItem(STORAGE_KEYS.USER)
+  try {
+    const user = localStorage.getItem(STORAGE_KEYS.USER)
 
-  return user ? JSON.parse(user) : null
+    return user ? JSON.parse(user) : null
+  } catch {
+    localStorage.removeItem(STORAGE_KEYS.USER)
+    return null
+  }
 }
 
 export const saveQuizProgress = (progress) => {
@@ -22,9 +27,19 @@ export const saveQuizProgress = (progress) => {
 }
 
 export const getQuizProgress = () => {
-  const progress = localStorage.getItem(STORAGE_KEYS.QUIZ_PROGRESS)
+  try {
+    const progress = localStorage.getItem(
+      STORAGE_KEYS.QUIZ_PROGRESS
+    )
 
-  return progress ? JSON.parse(progress) : null
+    return progress ? JSON.parse(progress) : null
+  } catch {
+    localStorage.removeItem(
+      STORAGE_KEYS.QUIZ_PROGRESS
+    )
+
+    return null
+  }
 }
 
 export const saveQuizResult = (result) => {
@@ -32,9 +47,21 @@ export const saveQuizResult = (result) => {
 }
 
 export const getQuizResult = () => {
-  const result = localStorage.getItem(STORAGE_KEYS.RESULT)
+  try {
+    const result = localStorage.getItem(
+      STORAGE_KEYS.RESULT
+    )
 
-  return result ? JSON.parse(result) : null
+    return result ? JSON.parse(result) : null
+  } catch {
+    localStorage.removeItem(STORAGE_KEYS.RESULT)
+    return null
+  }
+}
+
+export const restartQuiz = () => {
+  localStorage.removeItem(STORAGE_KEYS.QUIZ_PROGRESS)
+  localStorage.removeItem(STORAGE_KEYS.RESULT)
 }
 
 export const clearQuizSession = () => {
